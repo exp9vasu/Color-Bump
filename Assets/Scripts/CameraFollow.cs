@@ -25,6 +25,7 @@ public class CameraFollow : MonoBehaviour
 	
 	void Follow()
 	{
-		transform.position = ball.transform.position + offset;
+		//transform.position = transform.position + offset;
+		transform.position = new Vector3 (transform.position.x, ball.transform.position.y + offset.y, ball.transform.position.z + offset.z);
 	}
 }
