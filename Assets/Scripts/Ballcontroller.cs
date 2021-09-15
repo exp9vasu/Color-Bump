@@ -12,6 +12,7 @@ public class Ballcontroller : MonoBehaviour
     [SerializeField] private float minCamDistance = 3f;
 
     private Vector2 lastMousePos;
+    public GameObject RivalBall;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class Ballcontroller : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            RivalBall.GetComponent<Animator>().enabled = true;
+
             Vector2 currentmousePos = Input.mousePosition;
 
             if (lastMousePos == Vector2.zero)
@@ -36,7 +39,12 @@ public class Ballcontroller : MonoBehaviour
             lastMousePos = currentmousePos;
 
             Vector3 force = new Vector3(deltaPos.x, 0, deltaPos.y) * thrust;
+            
             rb.AddForce(force);
+            
+            //rb.MovePosition(force);
+
+            //rb.transform.Translate()
         }
         else
         {
