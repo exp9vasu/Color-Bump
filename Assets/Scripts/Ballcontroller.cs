@@ -6,10 +6,13 @@ public class Ballcontroller : MonoBehaviour
 {
     public static Ballcontroller instance;
 
+    public EnemyController enemyController;
+
     [SerializeField] private float thrust = 150f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float wallDistance = 5f;
     [SerializeField] private float minCamDistance = 3f;
+    private Vector3 force;
 
     private Vector2 lastMousePos;
     public GameObject RivalBall;
@@ -28,7 +31,7 @@ public class Ballcontroller : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            RivalBall.GetComponent<Animator>().enabled = true;
+            //RivalBall.GetComponent<Animator>().enabled = true;
 
             Vector2 currentmousePos = Input.mousePosition;
 
@@ -38,13 +41,22 @@ public class Ballcontroller : MonoBehaviour
             deltaPos = currentmousePos - lastMousePos;
             lastMousePos = currentmousePos;
 
-            Vector3 force = new Vector3(deltaPos.x, 0, deltaPos.y) * thrust;
+            force = new Vector3(deltaPos.x, 0, deltaPos.y) * thrust;
             
             rb.AddForce(force);
-            
+
             //rb.MovePosition(force);
 
             //rb.transform.Translate()
+
+            /*if (Mathf.Abs(deltaPos.x) > Mathf.Abs(deltaPos.y))
+            {
+                force = new Vector3(deltaPos.x, 0, 0) * thrust;
+            }
+            else if (Mathf.Abs(deltaPos.y) > Mathf.Abs(deltaPos.x))
+            {
+                force = new Vector3(0, 0, deltaPos.y) * thrust;
+            }*/
         }
         else
         {
@@ -73,19 +85,18 @@ public class Ballcontroller : MonoBehaviour
         transform.position = pos;
 
         if (GameManager.instance.GameEnded)
-            return;
+        { 
+            return; 
+        }
 
         if (GameManager.instance.GameStarted)
         {
             rb.MovePosition(transform.position + Vector3.forward * 5 * Time.fixedDeltaTime);
         }
-
-        
     }
 
     private void LateUpdate()
     {
-        
 
     }
 
@@ -98,5 +109,18 @@ public class Ballcontroller : MonoBehaviour
         {
             GameManager.instance.EndGame(false);
         }
+
+        if (collision.collider.CompareTag("Finish"))
+        {
+            transform.GetComponent<Rigidbody>().isKinematic = true;
+        }
     }
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            transform.GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }*/
 }

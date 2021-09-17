@@ -53,9 +53,10 @@ public class GameManager : MonoBehaviour
         }
         else if(win)
         {
-            UIManager.instance.ShowWinPanel();
-            Time.timeScale = slowMotionFactor;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            //UIManager.instance.ShowWinPanel();
+            //Time.timeScale = slowMotionFactor;
+            //Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            //ball.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 

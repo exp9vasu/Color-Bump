@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+/*    private void OnTriggerEnter(Collider other)
     {
         Ballcontroller ball = other.GetComponent<Ballcontroller>();
 
@@ -14,5 +14,18 @@ public class Goal : MonoBehaviour
         Debug.Log("Goal was touched");
 
         GameManager.instance.EndGame(true);
+    }
+*/
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Ballcontroller ball = coll.GetComponent<Ballcontroller>();
+
+        if (GameManager.instance.GameEnded)
+            return;
+
+        Debug.Log("Goal was touched");
+
+        GameManager.instance.EndGame(true);
+
     }
 }
