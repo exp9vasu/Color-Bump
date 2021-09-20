@@ -3,7 +3,22 @@ guid: f39983f3bf5f2dd41986b5dcf6fbe92c
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder_Cylinder_Material.001Mat
+    second: {fileID: 2100000, guid: 645c5babe76950248a9a453e6d663af0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder_Cylinder_Material.003Mat
+    second: {fileID: 2100000, guid: c03da3f4237f83b4283967250f2f79a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder_Cylinder_Material.004Mat
+    second: {fileID: 2100000, guid: 7ee2e1ee6c2f8d441893641f0db3e39d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -34,7 +49,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -81,7 +96,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.2
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

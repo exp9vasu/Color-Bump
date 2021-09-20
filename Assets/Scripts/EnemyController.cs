@@ -42,6 +42,17 @@ public class EnemyController : MonoBehaviour
         {
             transform.GetComponent<Rigidbody>().isKinematic = true;
             transform.GetComponent<NavMeshAgent>().enabled = false;
+
+            if(GameManager.instance.Crown_Enemy.transform.position.z > GameManager.instance.Crown_Player.transform.position.z)
+            {
+                GameManager.instance.PlayerLost();
+                
+            }
+            else
+            {
+                GameManager.instance.PlayerWon();
+                
+            }
         }
     }
 

@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform startTransform;
     [SerializeField] private Transform goalTransform;
     [SerializeField] private Transform ball;
+    [SerializeField] private Transform enemy;
+
+    public GameObject Crown_Player;
+    public GameObject Crown_Enemy;
 
     public float EntireDistance { get; private set; }
     public float DistanceLeft { get; private set; }
@@ -81,6 +85,22 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void PlayerWon()
+    {
+        Crown_Player.SetActive(true);
+        Crown_Enemy.SetActive(false);
+
+        
+    }
+
+    public void PlayerLost()
+    {
+        Crown_Player.SetActive(false);
+        Crown_Enemy.SetActive(true);
+
+       
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -96,5 +116,17 @@ public class GameManager : MonoBehaviour
             DistanceLeft = 0;
         }
         Debug.Log("Traveled distance is " + DistanceLeft + "entire distance is" + EntireDistance);
+
+        if (Crown_Enemy.transform.position.z < goalTransform.position.z-1 && Crown_Player.transform.position.z < goalTransform.position.z-1) 
+        { if (Crown_Enemy.transform.position.z > Crown_Player.transform.position.z)
+            {
+                PlayerLost();
+            }
+            else
+            {
+                PlayerWon();
+            } 
+        }
+        }
     }
-}
+
