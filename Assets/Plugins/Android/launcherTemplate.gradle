@@ -2,8 +2,44 @@
 
 apply plugin: 'com.android.application'
 
+repositories {
+        google()
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+        maven {
+            url 'https://s3.amazonaws.com/com.tabtale.repo/android/maven/backup'
+        }
+        maven {
+            url 'https://s3.amazonaws.com/com.tabtale.repo/android/maven/ttplugins'
+        }
+        maven {
+            url 'https://s3.amazonaws.com/com.tabtale.repo/android/maven/thirdparty'
+        }
+        maven {
+            url 'http://deltadna.bintray.com/android'
+        }
+        maven {
+            url "https://dl.bintray.com/ironsource-mobile/android-sdk"
+        }
+        maven {
+            url "https://adcolony.bintray.com/AdColony"
+        }
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
+        maven { url "https://chartboostmobile.bintray.com/Chartboost" }
+        maven {
+            url 'https://maven.ogury.co'
+        }
+        maven {
+            url  "https://dl.bintray.com/mintegral-official/mintegral_ad_sdk_android_for_oversea"
+        }
+        maven { url 'https://fyber.bintray.com/marketplace' }
+    }
+
 dependencies {
     implementation project(':unityLibrary')
+    implementation 'com.android.support:multidex:1.0.3'
     }
 
 android {
@@ -15,6 +51,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+configurations.all {
+        resolutionStrategy {
+            force 'androidx.core:core:1.2.0'
+            force 'androidx.media:media:1.0.1'
+        }
+    }
+
     defaultConfig {
         minSdkVersion **MINSDKVERSION**
         targetSdkVersion **TARGETSDKVERSION**
@@ -24,6 +67,23 @@ android {
         }
         versionCode **VERSIONCODE**
         versionName '**VERSIONNAME**'
+        multiDexEnabled true
+
+        tasks.whenTaskAdded { task ->
+            if (task.name.startsWith("bundle")) {
+                def renameTaskName = "rename${task.name.capitalize()}Aab"
+                def flavor = task.name.substring("bundle".length()).uncapitalize()
+                tasks.create(renameTaskName, Copy) {
+                    def path = "${buildDir}/outputs/bundle/${flavor}/"
+                    from(path)
+                    include "launcher.aab"
+                    destinationDir file("${buildDir}/outputs/bundle/${flavor}/")
+                    rename "launcher.aab", "launcher-release.aab"
+                }
+
+                task.finalizedBy(renameTaskName)
+            }
+        }
     }
 
     aaptOptions {
@@ -38,13 +98,13 @@ android {
     buildTypes {
         debug {
             minifyEnabled **MINIFY_DEBUG**
-            useProguard **PROGUARD_DEBUG**
+            
             proguardFiles getDefaultProguardFile('proguard-android.txt')**SIGNCONFIG**
             jniDebuggable true
         }
         release {
             minifyEnabled **MINIFY_RELEASE**
-            useProguard **PROGUARD_RELEASE**
+            
             proguardFiles getDefaultProguardFile('proguard-android.txt')**SIGNCONFIG**
         }
     }**PACKAGING_OPTIONS****SPLITS**

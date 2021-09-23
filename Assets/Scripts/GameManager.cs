@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Tabtale.TTPlugins;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform enemy;
 
     public GameObject Crown_Player;
-    public GameObject Crown_Enemy;
+    public GameObject Crown_Enemy, Confetti;
+
 
     public float EntireDistance { get; private set; }
     public float DistanceLeft { get; private set; }
@@ -33,6 +35,10 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        TTPCore.Setup();
+
+        Debug.Log("Setup Done!!");
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;

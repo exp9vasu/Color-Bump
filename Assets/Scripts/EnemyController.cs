@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    public static EnemyController instance;
+
     public NavMeshAgent agent;
     public GameObject FinishLine;
     public GameObject[] objectPool;
@@ -36,31 +38,34 @@ public class EnemyController : MonoBehaviour
         //targetNo++;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
         {
-            transform.GetComponent<Rigidbody>().isKinematic = true;
-            transform.GetComponent<NavMeshAgent>().enabled = false;
-
-            if(GameManager.instance.Crown_Enemy.transform.position.z > GameManager.instance.Crown_Player.transform.position.z)
-            {
-                GameManager.instance.PlayerLost();
-                
-            }
-            else
-            {
-                GameManager.instance.PlayerWon();
-                
-            }
+            
         }
-    }
+    }*/
 
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Finish"))
         {
             transform.GetComponent<Rigidbody>().isKinematic = true;
+            transform.GetComponent<NavMeshAgent>().enabled = false;
+            GameManager.instance.Confetti.SetActive(true);
+
+            if(GameManager.instance.Crown_Enemy.transform.position.z > GameManager.instance.Crown_Player.transform.position.z)
+            {
+                GameManager.instance.PlayerLost();
+                transform.GetComponent<Animator>().SetBool("hasWon",true);
+                Ballcontroller.instance.transform.GetComponent<Animator>().SetBool("hasLost", true);
+
+            }
+            else
+            {
+                GameManager.instance.PlayerWon();
+
+            }
         }
-    }*/
+    }
 }

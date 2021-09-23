@@ -113,6 +113,22 @@ public class Ballcontroller : MonoBehaviour
         if (collision.collider.CompareTag("Finish"))
         {
             transform.GetComponent<Rigidbody>().isKinematic = true;
+            GameManager.instance.Confetti.SetActive(true);
+
+
+            if (GameManager.instance.Crown_Player.transform.position.z < GameManager.instance.Crown_Enemy.transform.position.z)
+            {
+                GameManager.instance.PlayerLost();
+                //enemyController.GetComponent<Animator>().SetBool("hasWon",true);
+                //transform.GetComponent<Animator>().SetBool("hasLost", true);
+
+            }
+            else
+            {
+                GameManager.instance.PlayerWon();
+                transform.GetComponent<Animator>().SetBool("hasWon", true);
+                enemyController.transform.GetComponent<Animator>().SetBool("hasLost", true);
+            }
         }
     }
 
